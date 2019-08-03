@@ -1,14 +1,34 @@
-# puppeteer-in-electron
+# Introducing puppeteer-in-electron
 Run puppeteer within an electron app.
-
 ```
 npm install puppeteer-in-electron puppeteer-core electron
 ```
 
+# JavaScript
+```javascript
+const { app, BrowserWindow } = require("electron");
+const pie = require("puppeteer-in-electron").default
+const puppeteer = require("puppeteer-core");
+
+const main = async () => {
+  const {browser} = await pie.connect(app, puppeteer);
+ 
+  const window = new BrowserWindow();
+  const url = "https://example.com/";
+  await window.loadURL(url);
+ 
+  const page = await pie.getPage(browser, window);
+  console.log(page.url());
+  window.destroy();
+};
+
+main();
+```
+
+# TypeScript
 ```typescript
 import {BrowserWindow, app} from "electron";
-import assert from "assert";
-import pie from "./index";
+import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
 
 const main = async () => {
