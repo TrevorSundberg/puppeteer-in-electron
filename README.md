@@ -6,7 +6,7 @@ npm install puppeteer-in-electron puppeteer-core electron
 
 # JavaScript
 ```javascript
-const { app, BrowserWindow } = require("electron");
+const {BrowserWindow, app} = require("electron");
 const pie = require("puppeteer-in-electron").default
 const puppeteer = require("puppeteer-core");
 
