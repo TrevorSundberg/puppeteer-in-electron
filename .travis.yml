@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '11'
+install:
+- npm install
+script:
+- npm run build
+- npm test
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: Trevor.Sundberg@gmail.com
+  api_key:
+    secure: GSs3/6Am4JeApsgwHx/ht8HmFm9QdVvpSCV7ISqLcXiXvw+YiCgYrka9qpIT4vc63Wb8MPwqMIoSqnQJufWl4t6KrrGZ2U0ojtr/sBNW9nRwStfrNVXKdzXc8TpxLs830i/gb35lC9AG1Ll7VI5jbu6tojNAmv9N6dUG91Z6n7bJ9IEQMTJ/Wied4sAmcQApKNgVl2pvOJ2rdWq2ELbfZ5wt7+tekxLfAODAJb7tYEBNasFz6hvTT6VvZBhzVIsxM+xdRFXTJOovOyAm/ga27PWFl/PUxSseJP2K6/ac9209Kp7giSzpf2LdSJzUrABvnWkfLlnauiHkFQ/4Vr5GKv/IbsHdATzCpAl6S3IY6jtfdR1HnCpM7OGQOf53XdD2EFF4Xdb70iV9lzVrYV+EEHHFgYcwvMeHNintNzRAU9bI7bQ7i+R1rBZv5oZ8RWFPV4ommW0p5kIH7/DLqWAzwPzzukTKXFX9+YGJQw6Z4OYEYlUVZTqw4EA3vYSpNuDMEoTeiV8/ZiYfbJ025kx3R5UjLwQVibFPUAfvyLEGHP4h28DFRcnKIFJLmODuI1BA3Icvgx435wngfnF6xhIta1IzNUCkBZ+enyvGXr5SCOh8mVYrqu5GUa1B8iXE/YczBiQxJtzNhDCvZGwAMqdx/mhNBbn2K/NNIaZ8o+OCOJU=
+  on:
+    tags: true
+    branch: master

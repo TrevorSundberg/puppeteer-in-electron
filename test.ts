@@ -1,11 +1,3 @@
-# puppeteer-in-electron
-Run puppeteer within an electron app.
-
-```
-npm install puppeteer-in-electron puppeteer-core electron
-```
-
-```typescript
 import {BrowserWindow, app} from "electron";
 import assert from "assert";
 import pie from "./index";
@@ -20,8 +12,8 @@ const main = async () => {
 
   const page = await pie.getPage(browser, window);
   console.log(page.url());
+  assert.equal(page.url(), url);
   window.destroy();
 };
 
 main();
-```
