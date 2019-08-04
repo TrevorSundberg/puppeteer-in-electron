@@ -44,13 +44,22 @@ const connect = async (app: App, puppeteer: puppeteer, port?: number) => {
   return {browser, json, port};
 };
 
-const getPage = async (browser: Browser, window: BrowserWindow) => {
+const getPage = async (browser: Browser, window: BrowserWindow, allowBlankNavigate: boolean = true) => {
   if (!browser) {
     throw new Error("The parameter 'browser' was not passed in.");
   }
 
   if (!window) {
     throw new Error("The parameter 'window' was not passed in.");
+  }
+
+  if (window.webContents.getURL() === "") {
+    if (allowBlankNavigate) {
+      await window.loadURL("about:blank");
+    } else {
+      throw new Error("In order to get the puppeteer Page, we must be able " +
+        "to execute JavaScript which requires the window having loaded a URL.");
+    }
   }
 
   const guid = uuid.v4();
