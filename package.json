@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-in-electron",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Run puppeteer within an electron app.",
   "main": "./bin/index.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "docs": "documentation build ./bin/index.js -f md -o API.md",
     "test": "electron ./bin/test.js && electron ./test.js",
     "all": "npm run build && npm test && npm run docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TrevorSundberg/puppeteer-in-electron.git"
   },
   "keywords": [
     "electron",

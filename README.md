@@ -4,7 +4,7 @@ Run puppeteer within an electron app.
 npm install puppeteer-in-electron puppeteer-core electron
 ```
 
-See the [API documentation](API.md).
+See the [API documentation](/API.md).
 
 # JavaScript
 ```javascript
