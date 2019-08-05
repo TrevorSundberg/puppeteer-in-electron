@@ -1,7 +1,8 @@
-import {BrowserWindow, app} from "electron";
-import assert from "assert";
-import pie from "./index";
-import puppeteer from "puppeteer-core";
+/* eslint-disable @typescript-eslint/no-var-requires */
+const {BrowserWindow, app} = require("electron");
+const assert = require("assert");
+const pie = require("./bin/index");
+const puppeteer = require("puppeteer-core");
 
 const main = async () => {
   const browser = await pie.connect(app, puppeteer);

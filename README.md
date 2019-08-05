@@ -4,10 +4,12 @@ Run puppeteer within an electron app.
 npm install puppeteer-in-electron puppeteer-core electron
 ```
 
+See the [API documentation](API.md).
+
 # JavaScript
 ```javascript
 const {BrowserWindow, app} = require("electron");
-const pie = require("puppeteer-in-electron").default
+const pie = require("puppeteer-in-electron")
 const puppeteer = require("puppeteer-core");
 
 const main = async () => {

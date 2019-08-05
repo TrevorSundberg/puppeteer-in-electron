@@ -5,7 +5,9 @@
   "main": "./bin/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "electron ./bin/test.js"
+    "docs": "documentation build ./bin/index.js -f md -o API.md",
+    "test": "electron ./bin/test.js && electron ./test.js",
+    "all": "npm run build && npm test && npm run docs"
   },
   "keywords": [
     "electron",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
+    "documentation": "^12.1.1",
     "electron": "^6.0.0",
     "eslint": "^6.1.0",
     "puppeteer-core": "^1.19.0",
