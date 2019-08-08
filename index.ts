@@ -1,6 +1,5 @@
-import deasync from "deasync";
+import {execSync} from "child_process";
 import fetch from "node-fetch";
-import portfinder from "portfinder";
 import retry from "async-retry";
 import uuid from "uuid";
 
@@ -35,7 +34,7 @@ export const connect = async (app: App, puppeteer: puppeteer, port: number = 0) 
   }
 
   // eslint-disable-next-line no-param-reassign
-  port = port || deasync(portfinder.getPort)();
+  port = port || parseInt(execSync(JSON.stringify(require.resolve("get-port-cli/cli")), {encoding: "utf8"}), 10);
 
   app.commandLine.appendSwitch("remote-debugging-port", `${port}`);
 
