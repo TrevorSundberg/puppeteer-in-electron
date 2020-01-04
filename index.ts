@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
+import findFreePort from "find-free-port-sync";
 import retry from "async-retry";
 import uuid from "uuid";
-import findFreePort from "find-free-port-sync";
 
 type App = import("electron").App;
 type BrowserWindow = import("electron").BrowserWindow;
@@ -36,7 +36,10 @@ export const connect = async (app: App, puppeteer: puppeteer, port: number = 0) 
   // eslint-disable-next-line no-param-reassign
   port = port || findFreePort();
 
-  app.commandLine.appendSwitch("remote-debugging-port", `${port}`);
+  app.commandLine.appendSwitch(
+    "remote-debugging-port",
+    `${port}`
+  );
 
   await app.whenReady;
   const response = await retry(() => fetch(`http://127.0.0.1:${port}/json/version`));
