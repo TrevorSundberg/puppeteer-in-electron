@@ -5,9 +5,10 @@
   "main": "./bin/index.js",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint --ext .ts,.js .",
     "docs": "documentation build ./bin/index.js -f md -o API.md",
     "test": "electron ./bin/test.js && electron ./test.js",
-    "all": "npm run build && npm test && npm run docs"
+    "all": "npm run lint && npm run build && npm test && npm run docs"
   },
   "repository": {
     "type": "git",
