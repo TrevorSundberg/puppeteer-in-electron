@@ -8,7 +8,9 @@
     "lint": "eslint --ext .ts,.js .",
     "docs": "documentation build ./bin/index.js -f md -o API.md",
     "test": "electron ./bin/test.js && electron ./test.js",
-    "all": "npm run lint && npm run build && npm test && npm run docs"
+    "pack": "electron-packager --no-prune --overwrite --out dist . && sed -i 's/index.js/test.js/g' ./dist/puppeteer-in-electron-linux-x64/resources/app/package.json",
+    "testPack": "./dist/puppeteer-in-electron-linux-x64/puppeteer-in-electron",
+    "all": "npm run lint && npm run build && npm run pack && npm run testPack && npm test && npm run docs"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "documentation": "^12.1.4",
     "electron": "^6.1.7",
+    "electron-packager": "^14.1.1",
     "eslint": "^6.8.0",
     "puppeteer-core": "^1.20.0",
     "typescript": "^3.7.4"
