@@ -1,7 +1,7 @@
-import {execSync} from "child_process";
 import fetch from "node-fetch";
 import retry from "async-retry";
 import uuid from "uuid";
+import findFreePort from "find-free-port-sync";
 
 type App = import("electron").App;
 type BrowserWindow = import("electron").BrowserWindow;
@@ -34,7 +34,7 @@ export const connect = async (app: App, puppeteer: puppeteer, port: number = 0) 
   }
 
   // eslint-disable-next-line no-param-reassign
-  port = port || parseInt(execSync(JSON.stringify(require.resolve("get-port-cli/cli")), {encoding: "utf8"}), 10);
+  port = port || findFreePort();
 
   app.commandLine.appendSwitch("remote-debugging-port", `${port}`);
 
