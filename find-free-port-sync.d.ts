@@ -1,5 +1,5 @@
 declare module "find-free-port-sync" {
-    function findFreePort(): number;
+  function findFreePort(): number;
 
-    export = findFreePort
+  export = findFreePort
 }
