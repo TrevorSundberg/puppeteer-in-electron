@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-in-electron",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Run puppeteer within an electron app.",
   "main": "./bin/index.js",
   "scripts": {
