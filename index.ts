@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import findFreePort from "find-free-port-sync";
+import findFreePort from "find-free-port-sync-fixed";
 import retry from "async-retry";
 import uuid from "uuid";
 

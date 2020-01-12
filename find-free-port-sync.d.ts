@@ -1,4 +1,4 @@
-declare module "find-free-port-sync" {
+declare module "find-free-port-sync-fixed" {
   function findFreePort(): number;
 
   export = findFreePort
