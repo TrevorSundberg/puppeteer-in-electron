@@ -8,21 +8,15 @@ type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
 
 /**
- * Connects puppeteer to the electron app. Must be called at startup before the electron app is ready.
- * When connecting multiple times, you use the same port.
+ * Initialize the electron app to accept puppeteer/DevTools connections.
+ * Must be called at startup before the electron app is ready.
  * @param {App} app The app imported from electron.
- * @param {puppeteer} puppeteer The imported puppeteer namespace.
  * @param {number} port Port to host the DevTools websocket connection.
- * @returns {Promise<Browser>} An object containing the puppeteer browser, the port, and json received from DevTools.
  */
-export const connect = async (app: App, puppeteer: puppeteer, port: number = 14292) => {
+export const initialize = async (app: App, port: number = 14292) => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
-  }
-
-  if (!puppeteer) {
-    throw new Error("The parameter 'puppeteer' was not passed in.");
   }
 
   if (app.isReady()) {
@@ -33,15 +27,32 @@ export const connect = async (app: App, puppeteer: puppeteer, port: number = 142
     throw new Error(`Invalid port ${port}.`);
   }
 
-  const prevSwitch = app.commandLine.getSwitchValue("remote-debugging-port");
-  if (prevSwitch && prevSwitch !== `${port}`) {
-    throw new Error(`Attempting to connect on port ${port} when the previously` +
-      `specified was ${prevSwitch} (must be the same for multiple connections)`);
+  if (app.commandLine.getSwitchValue("remote-debugging-port")) {
+    throw new Error("The electron application is already listening on a port. Double `initialize`?");
   }
+
   app.commandLine.appendSwitch(
     "remote-debugging-port",
     `${port}`
   );
+};
+
+/**
+ * Connects puppeteer to the electron app. Must call {@see initialize} before connecting.
+ * When connecting multiple times, you use the same port.
+ * @param {App} app The app imported from electron.
+ * @param {puppeteer} puppeteer The imported puppeteer namespace.
+ * @returns {Promise<Browser>} An object containing the puppeteer browser, the port, and json received from DevTools.
+ */
+export const connect = async (app: App, puppeteer: puppeteer) => {
+  if (!puppeteer) {
+    throw new Error("The parameter 'puppeteer' was not passed in.");
+  }
+
+  const port = app.commandLine.getSwitchValue("remote-debugging-port");
+  if (!port) {
+    throw new Error("The electron application was not setup to listen on a port. Was `initialize` called at startup?");
+  }
 
   await app.whenReady;
   const response = await retry(() => fetch(`http://127.0.0.1:${port}/json/version`));
@@ -97,5 +108,6 @@ export const getPage = async (browser: Browser, window: BrowserWindow, allowBlan
 
 export default {
   connect,
-  getPage
+  getPage,
+  initialize
 };

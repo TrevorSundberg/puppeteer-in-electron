@@ -2,23 +2,34 @@
 
 ### Table of Contents
 
--   [connect][1]
+-   [initialize][1]
     -   [Parameters][2]
--   [getPage][3]
+-   [connect][3]
     -   [Parameters][4]
+-   [getPage][5]
+    -   [Parameters][6]
+
+## initialize
+
+Initialize the electron app to accept puppeteer/DevTools connections.
+Must be called at startup before the electron app is ready.
+
+### Parameters
+
+-   `app` **App** The app imported from electron.
+-   `port` **[number][7]** Port to host the DevTools websocket connection. (optional, default `14292`)
 
 ## connect
 
-Connects puppeteer to the electron app. Must be called at startup before the electron app is ready.
+Connects puppeteer to the electron app. Must call {@see initialize} before connecting.
 When connecting multiple times, you use the same port.
 
 ### Parameters
 
 -   `app` **App** The app imported from electron.
 -   `puppeteer` **puppeteer** The imported puppeteer namespace.
--   `port` **[number][5]** Port to host the DevTools websocket connection. (optional, default `14292`)
 
-Returns **[Promise][6]&lt;Browser>** An object containing the puppeteer browser, the port, and json received from DevTools.
+Returns **[Promise][8]&lt;Browser>** An object containing the puppeteer browser, the port, and json received from DevTools.
 
 ## getPage
 
@@ -30,20 +41,24 @@ If no url is loaded, the parameter 'allowBlankNavigate' allows us to load "about
 
 -   `browser` **Browser** The puppeteer browser instance obtained from calling |connect|.
 -   `window` **BrowserWindow** The browser window for which we want to find the corresponding puppeteer Page.
--   `allowBlankNavigate` **[boolean][7]** If no url is loaded, allow us to load "about:blank" so that we may find the Page. (optional, default `true`)
+-   `allowBlankNavigate` **[boolean][9]** If no url is loaded, allow us to load "about:blank" so that we may find the Page. (optional, default `true`)
 
-Returns **[Promise][6]&lt;Page>** The page that corresponds with the BrowserWindow.
+Returns **[Promise][8]&lt;Page>** The page that corresponds with the BrowserWindow.
 
-[1]: #connect
+[1]: #initialize
 
 [2]: #parameters
 
-[3]: #getpage
+[3]: #connect
 
 [4]: #parameters-1
 
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[5]: #getpage
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[6]: #parameters-2
 
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

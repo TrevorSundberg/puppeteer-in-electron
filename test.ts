@@ -4,6 +4,7 @@ import pie from "./index";
 import puppeteer from "puppeteer-core";
 
 const main = async () => {
+  pie.initialize(app);
   const browser = await pie.connect(
     app,
     puppeteer
