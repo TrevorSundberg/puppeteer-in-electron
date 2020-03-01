@@ -35,6 +35,17 @@ export const initialize = async (app: App, port: number = 14292) => {
     "remote-debugging-port",
     `${port}`
   );
+  const electronMajor = parseInt(
+    app.getVersion().split(".")[0],
+    10
+  );
+  // NetworkService crashes in electron 6.
+  if (electronMajor >= 7) {
+    app.commandLine.appendSwitch(
+      "enable-features",
+      "NetworkService"
+    );
+  }
 };
 
 /**
