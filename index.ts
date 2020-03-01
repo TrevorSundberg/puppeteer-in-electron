@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import findFreePort from "find-free-port-sync-fixed";
 import retry from "async-retry";
 import uuid from "uuid";
 
@@ -10,12 +9,13 @@ type Browser = import("puppeteer-core").Browser;
 
 /**
  * Connects puppeteer to the electron app. Must be called at startup before the electron app is ready.
+ * When connecting multiple times, you use the same port.
  * @param {App} app The app imported from electron.
  * @param {puppeteer} puppeteer The imported puppeteer namespace.
- * @param {number} port Port to host the DevTools websocket connection. If none is given, we will pick an open port.
+ * @param {number} port Port to host the DevTools websocket connection.
  * @returns {Promise<Browser>} An object containing the puppeteer browser, the port, and json received from DevTools.
  */
-export const connect = async (app: App, puppeteer: puppeteer, port: number = 0) => {
+export const connect = async (app: App, puppeteer: puppeteer, port: number = 14292) => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
@@ -29,13 +29,15 @@ export const connect = async (app: App, puppeteer: puppeteer, port: number = 0) 
     throw new Error("Must be called at startup before the electron app is ready.");
   }
 
-  if (port < 0 || port > 65535) {
+  if (port <= 0 || port > 65535) {
     throw new Error(`Invalid port ${port}.`);
   }
 
-  // eslint-disable-next-line no-param-reassign
-  port = port || findFreePort();
-
+  const prevSwitch = app.commandLine.getSwitchValue("remote-debugging-port");
+  if (prevSwitch && prevSwitch !== `${port}`) {
+    throw new Error(`Attempting to connect on port ${port} when the previously` +
+      `specified was ${prevSwitch} (must be the same for multiple connections)`);
+  }
   app.commandLine.appendSwitch(
     "remote-debugging-port",
     `${port}`

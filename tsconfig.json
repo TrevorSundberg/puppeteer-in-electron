@@ -12,7 +12,6 @@
   },
   "files": [
     "index.ts",
-    "test.ts",
-    "find-free-port-sync.d.ts"
+    "test.ts"
   ]
 }

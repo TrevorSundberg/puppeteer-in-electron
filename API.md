@@ -10,12 +10,13 @@
 ## connect
 
 Connects puppeteer to the electron app. Must be called at startup before the electron app is ready.
+When connecting multiple times, you use the same port.
 
 ### Parameters
 
 -   `app` **App** The app imported from electron.
 -   `puppeteer` **puppeteer** The imported puppeteer namespace.
--   `port` **[number][5]** Port to host the DevTools websocket connection. If none is given, we will pick an open port. (optional, default `0`)
+-   `port` **[number][5]** Port to host the DevTools websocket connection. (optional, default `14292`)
 
 Returns **[Promise][6]&lt;Browser>** An object containing the puppeteer browser, the port, and json received from DevTools.
 
