@@ -49,7 +49,7 @@ export const initialize = async (app: App, port: number = 14292) => {
 };
 
 /**
- * Connects puppeteer to the electron app. Must call {@see initialize} before connecting.
+ * Connects puppeteer to the electron app. Must call {@link initialize} before connecting.
  * When connecting multiple times, you use the same port.
  * @param {App} app The app imported from electron.
  * @param {puppeteer} puppeteer The imported puppeteer namespace.

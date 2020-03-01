@@ -21,7 +21,7 @@ Must be called at startup before the electron app is ready.
 
 ## connect
 
-Connects puppeteer to the electron app. Must call {@see initialize} before connecting.
+Connects puppeteer to the electron app. Must call [initialize][8] before connecting.
 When connecting multiple times, you use the same port.
 
 ### Parameters
@@ -29,7 +29,7 @@ When connecting multiple times, you use the same port.
 -   `app` **App** The app imported from electron.
 -   `puppeteer` **puppeteer** The imported puppeteer namespace.
 
-Returns **[Promise][8]&lt;Browser>** An object containing the puppeteer browser, the port, and json received from DevTools.
+Returns **[Promise][9]&lt;Browser>** An object containing the puppeteer browser, the port, and json received from DevTools.
 
 ## getPage
 
@@ -41,9 +41,9 @@ If no url is loaded, the parameter 'allowBlankNavigate' allows us to load "about
 
 -   `browser` **Browser** The puppeteer browser instance obtained from calling |connect|.
 -   `window` **BrowserWindow** The browser window for which we want to find the corresponding puppeteer Page.
--   `allowBlankNavigate` **[boolean][9]** If no url is loaded, allow us to load "about:blank" so that we may find the Page. (optional, default `true`)
+-   `allowBlankNavigate` **[boolean][10]** If no url is loaded, allow us to load "about:blank" so that we may find the Page. (optional, default `true`)
 
-Returns **[Promise][8]&lt;Page>** The page that corresponds with the BrowserWindow.
+Returns **[Promise][9]&lt;Page>** The page that corresponds with the BrowserWindow.
 
 [1]: #initialize
 
@@ -59,6 +59,8 @@ Returns **[Promise][8]&lt;Page>** The page that corresponds with the BrowserWind
 
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[8]: initialize
 
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
