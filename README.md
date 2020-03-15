@@ -1,5 +1,5 @@
 # Introducing puppeteer-in-electron
-Run puppeteer within an electron app.
+Use puppeteer to test and control your electron application.
 ```
 npm install puppeteer-in-electron puppeteer-core electron
 ```
