@@ -7,13 +7,17 @@ type BrowserWindow = import("electron").BrowserWindow;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
 
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const getFreePortSync = require("get-port-sync");
+
 /**
  * Initialize the electron app to accept puppeteer/DevTools connections.
  * Must be called at startup before the electron app is ready.
  * @param {App} app The app imported from electron.
  * @param {number} port Port to host the DevTools websocket connection.
  */
-export const initialize = async (app: App, port: number = 14292) => {
+export const initialize = async (app: App, port: number = getFreePortSync()) => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
