@@ -1,5 +1,5 @@
-import child_process from "child_process";
 import fetch from "node-fetch";
+import getPort from "get-port";
 import retry from "async-retry";
 import uuid from "uuid";
 
@@ -8,28 +8,13 @@ type BrowserWindow = import("electron").BrowserWindow;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
 
-const findPortSync = (): number => {
-  // eslint-disable-next-line no-sync
-  const result = child_process.execSync(
-    `"${process.argv0}" -i`,
-    {
-      encoding: "utf8",
-      input: "const svr = require('net').createServer().listen(0, '127.0.0.1', (a) => console.log(svr.address().port))"
-    }
-  );
-  return parseInt(
-    (/[0-9]+/gu).exec(result)[0],
-    10
-  );
-};
-
 /**
  * Initialize the electron app to accept puppeteer/DevTools connections.
  * Must be called at startup before the electron app is ready.
  * @param {App} app The app imported from electron.
  * @param {number} port Port to host the DevTools websocket connection.
  */
-export const initialize = async (app: App, port: number = findPortSync()) => {
+export const initialize = async (app: App, port: number = 0) => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
@@ -39,7 +24,7 @@ export const initialize = async (app: App, port: number = findPortSync()) => {
     throw new Error("Must be called at startup before the electron app is ready.");
   }
 
-  if (port <= 0 || port > 65535) {
+  if (port < 0 || port > 65535) {
     throw new Error(`Invalid port ${port}.`);
   }
 
@@ -47,9 +32,10 @@ export const initialize = async (app: App, port: number = findPortSync()) => {
     throw new Error("The electron application is already listening on a port. Double `initialize`?");
   }
 
+  const actualPort = port === 0 ? await getPort() : port;
   app.commandLine.appendSwitch(
     "remote-debugging-port",
-    `${port}`
+    `${actualPort}`
   );
   app.commandLine.appendSwitch(
     "remote-debugging-address",

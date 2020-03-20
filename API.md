@@ -17,7 +17,7 @@ Must be called at startup before the electron app is ready.
 ### Parameters
 
 -   `app` **App** The app imported from electron.
--   `port` **[number][7]** Port to host the DevTools websocket connection. (optional, default `14292`)
+-   `port` **[number][7]** Port to host the DevTools websocket connection. (optional, default `0`)
 
 ## connect
 

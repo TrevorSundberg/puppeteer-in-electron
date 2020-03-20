@@ -5,7 +5,7 @@ const pie = require("./bin/index");
 const puppeteer = require("puppeteer-core");
 
 const main = async () => {
-  pie.initialize(app);
+  await pie.initialize(app);
   const browser = await pie.connect(
     app,
     puppeteer

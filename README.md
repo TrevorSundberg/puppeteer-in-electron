@@ -13,7 +13,7 @@ const pie = require("puppeteer-in-electron")
 const puppeteer = require("puppeteer-core");
 
 const main = async () => {
-  pie.initialize(app);
+  await pie.initialize(app);
   const browser = await pie.connect(app, puppeteer);
  
   const window = new BrowserWindow();
@@ -35,7 +35,7 @@ import pie from "puppeteer-in-electron";
 import puppeteer from "puppeteer-core";
 
 const main = async () => {
-  pie.initialize(app);
+  await pie.initialize(app);
   const browser = await pie.connect(app, puppeteer);
 
   const window = new BrowserWindow();
