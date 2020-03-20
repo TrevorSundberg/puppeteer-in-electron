@@ -1,3 +1,4 @@
+import child_process from "child_process";
 import fetch from "node-fetch";
 import retry from "async-retry";
 import uuid from "uuid";
@@ -7,13 +8,28 @@ type BrowserWindow = import("electron").BrowserWindow;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
 
+const findPortSync = (): number => {
+  // eslint-disable-next-line no-sync
+  const result = child_process.execSync(
+    `"${process.argv0}" -i`,
+    {
+      encoding: "utf8",
+      input: "const svr = require('net').createServer().listen(0, '127.0.0.1', (a) => console.log(svr.address().port))"
+    }
+  );
+  return parseInt(
+    (/[0-9]+/gu).exec(result)[0],
+    10
+  );
+};
+
 /**
  * Initialize the electron app to accept puppeteer/DevTools connections.
  * Must be called at startup before the electron app is ready.
  * @param {App} app The app imported from electron.
  * @param {number} port Port to host the DevTools websocket connection.
  */
-export const initialize = async (app: App, port: number = 14292) => {
+export const initialize = async (app: App, port: number = findPortSync()) => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
@@ -34,6 +50,10 @@ export const initialize = async (app: App, port: number = 14292) => {
   app.commandLine.appendSwitch(
     "remote-debugging-port",
     `${port}`
+  );
+  app.commandLine.appendSwitch(
+    "remote-debugging-address",
+    "127.0.0.1"
   );
   const electronMajor = parseInt(
     app.getVersion().split(".")[0],
