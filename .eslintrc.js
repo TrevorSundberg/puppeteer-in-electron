@@ -45,7 +45,8 @@ module.exports = {
     "no-plusplus": "off",
     "max-params": ["error", 6],
     "no-mixed-operators": "off",
-
+    "function-paren-newline": "off",
+    "function-call-argument-newline": "off",
     "default-case": "off"
   },
 };
