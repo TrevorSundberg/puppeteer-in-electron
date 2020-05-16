@@ -1,5 +1,5 @@
-import fetch from "node-fetch";
 import getPort from "get-port";
+import http from "http";
 import retry from "async-retry";
 import uuid from "uuid";
 
@@ -7,6 +7,26 @@ type App = import("electron").App;
 type BrowserWindow = import("electron").BrowserWindow;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
+
+const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
+  let json = "";
+  const request = http.request(
+    {
+      host: "127.0.0.1",
+      path: "/json/version",
+      port
+    },
+    (response) => {
+      response.on("error", reject);
+      response.on("data", (chunk: Buffer) => {
+        json += chunk.toString();
+      });
+      response.on("end", () => resolve(JSON.parse(json)));
+    }
+  );
+  request.on("error", reject);
+  request.end();
+});
 
 /**
  * Initialize the electron app to accept puppeteer/DevTools connections.
@@ -72,8 +92,7 @@ export const connect = async (app: App, puppeteer: puppeteer) => {
   }
 
   await app.whenReady;
-  const response = await retry(() => fetch(`http://127.0.0.1:${port}/json/version`));
-  const json = await response.json();
+  const json = await retry(() => readJson(port));
 
   const browser = await puppeteer.connect({
     browserWSEndpoint: json.webSocketDebuggerUrl,
