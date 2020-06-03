@@ -112,7 +112,11 @@ export const connect = async (app: App, puppeteer: puppeteer) => {
  * @param {boolean} allowBlankNavigate If no url is loaded, allow us to load "about:blank" so that we may find the Page.
  * @returns {Promise<Page>} The page that corresponds with the BrowserWindow.
  */
-export const getPage = async (browser: Browser, window: BrowserWindow | BrowserView, allowBlankNavigate: boolean = true) => {
+export const getPage = async (
+  browser: Browser,
+  window: BrowserWindow | BrowserView,
+  allowBlankNavigate: boolean = true
+) => {
   if (!browser) {
     throw new Error("The parameter 'browser' was not passed in.");
   }
