@@ -5,6 +5,7 @@ import uuid from "uuid";
 
 type App = import("electron").App;
 type BrowserWindow = import("electron").BrowserWindow;
+type BrowserView = import("electron").BrowserView;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
 
@@ -111,7 +112,11 @@ export const connect = async (app: App, puppeteer: puppeteer) => {
  * @param {boolean} allowBlankNavigate If no url is loaded, allow us to load "about:blank" so that we may find the Page.
  * @returns {Promise<Page>} The page that corresponds with the BrowserWindow.
  */
-export const getPage = async (browser: Browser, window: BrowserWindow, allowBlankNavigate: boolean = true) => {
+export const getPage = async (
+  browser: Browser,
+  window: BrowserWindow | BrowserView,
+  allowBlankNavigate: boolean = true
+) => {
   if (!browser) {
     throw new Error("The parameter 'browser' was not passed in.");
   }
@@ -122,7 +127,7 @@ export const getPage = async (browser: Browser, window: BrowserWindow, allowBlan
 
   if (window.webContents.getURL() === "") {
     if (allowBlankNavigate) {
-      await window.loadURL("about:blank");
+      await window.webContents.loadURL("about:blank");
     } else {
       throw new Error("In order to get the puppeteer Page, we must be able " +
         "to execute JavaScript which requires the window having loaded a URL.");
