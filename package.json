@@ -35,10 +35,10 @@
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "documentation": "^13.0.1",
-    "electron": "^8.0.2",
-    "electron-packager": "^14.1.1",
+    "electron": "^9.0.4",
+    "electron-packager": "^14.2.1",
     "eslint": "^6.8.0",
-    "puppeteer-core": "^1.20.0",
+    "puppeteer-core": "^4.0.0",
     "typescript": "^3.7.4"
   }
 }
