@@ -53,7 +53,7 @@ export const initialize = async (app: App, port: number = 0) => {
     throw new Error("The electron application is already listening on a port. Double `initialize`?");
   }
 
-  const actualPort = port === 0 ? await getPort() : port;
+  const actualPort = port === 0 ? await getPort({host: '127.0.0.1'}) : port;
   app.commandLine.appendSwitch(
     "remote-debugging-port",
     `${actualPort}`
