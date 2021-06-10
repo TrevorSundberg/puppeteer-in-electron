@@ -21,7 +21,7 @@ const main = async () => {
   const url = "https://example.com/";
   await window.loadURL(url);
   console.log(page.url());
-  assert.equal(
+  assert.strictEqual(
     page.url(),
     url
   );

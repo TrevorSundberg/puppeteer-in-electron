@@ -1,7 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
   extends: [
-    "eslint:all",
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   parserOptions: {
@@ -24,7 +24,7 @@ module.exports = {
     "max-len": ["error", 120],
     "padded-blocks": ["error", "never"],
     "object-property-newline": "off",
-    "object-curly-newline": ["error", { "multiline": true, "consistent": true }],
+    "object-curly-newline": ["error", { multiline: true, consistent: true }],
     "multiline-ternary": "off",
 
     "no-console": "off",

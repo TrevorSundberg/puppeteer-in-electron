@@ -8,6 +8,7 @@ type BrowserWindow = import("electron").BrowserWindow;
 type BrowserView = import("electron").BrowserView;
 type puppeteer = typeof import("puppeteer-core");
 type Browser = import("puppeteer-core").Browser;
+type Page = import("puppeteer-core").Page;
 
 const readJson = async (port: string): Promise<any> => new Promise((resolve, reject) => {
   let json = "";
@@ -35,7 +36,7 @@ const readJson = async (port: string): Promise<any> => new Promise((resolve, rej
  * @param {App} app The app imported from electron.
  * @param {number} port Port to host the DevTools websocket connection.
  */
-export const initialize = async (app: App, port: number = 0) => {
+export const initialize = async (app: App, port = 0): Promise<void> => {
   if (!app) {
     throw new Error("The parameter 'app' was not passed in. " +
       "This may indicate that you are running in node rather than electron.");
@@ -66,7 +67,7 @@ export const initialize = async (app: App, port: number = 0) => {
     app.getVersion().split(".")[0],
     10
   );
-  // NetworkService crashes in electron 6.
+    // NetworkService crashes in electron 6.
   if (electronMajor >= 7) {
     app.commandLine.appendSwitch(
       "enable-features",
@@ -82,7 +83,7 @@ export const initialize = async (app: App, port: number = 0) => {
  * @param {puppeteer} puppeteer The imported puppeteer namespace.
  * @returns {Promise<Browser>} An object containing the puppeteer browser, the port, and json received from DevTools.
  */
-export const connect = async (app: App, puppeteer: puppeteer) => {
+export const connect = async (app: App, puppeteer: puppeteer): Promise<Browser> => {
   if (!puppeteer) {
     throw new Error("The parameter 'puppeteer' was not passed in.");
   }
@@ -115,8 +116,8 @@ export const connect = async (app: App, puppeteer: puppeteer) => {
 export const getPage = async (
   browser: Browser,
   window: BrowserWindow | BrowserView,
-  allowBlankNavigate: boolean = true
-) => {
+  allowBlankNavigate = true
+): Promise<Page> => {
   if (!browser) {
     throw new Error("The parameter 'browser' was not passed in.");
   }
