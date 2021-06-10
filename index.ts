@@ -1,7 +1,7 @@
 import getPort from "get-port";
 import http from "http";
 import retry from "async-retry";
-import uuid from "uuid";
+import {v4} from "uuid";
 
 type App = import("electron").App;
 type BrowserWindow = import("electron").BrowserWindow;
@@ -135,7 +135,7 @@ export const getPage = async (
     }
   }
 
-  const guid = uuid.v4();
+  const guid = v4();
   await window.webContents.executeJavaScript(`window.puppeteer = "${guid}"`);
   const pages = await browser.pages();
   const guids = await Promise.all(pages.map((testPage) => testPage.evaluate("window.puppeteer")));

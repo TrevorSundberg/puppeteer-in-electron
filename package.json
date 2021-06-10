@@ -9,7 +9,7 @@
     "test": "electron ./bin/test.js && electron ./test.js",
     "pack": "electron-packager --no-prune --overwrite --out dist . && sed -i 's/index.js/test.js/g' ./dist/puppeteer-in-electron-linux-x64/resources/app/package.json",
     "testPack": "./dist/puppeteer-in-electron-linux-x64/puppeteer-in-electron",
-    "all": "npm run lint && npm run build && npm run test && npm run pack && npm run testPack && npm run docs"
+    "all": "npm run lint && npm run build && npm run test && npm run pack && npm run testPack"
   },
   "repository": {
     "type": "git",
