@@ -141,7 +141,7 @@ export const getPage = async (
   await window.webContents.executeJavaScript(`window.puppeteer = "${guid}"`);
   const pages = await browser.pages();
   const guids = await Promise.all(
-    pages.map((testPage) => {
+    pages.map(async (testPage) => {
       try {
         // there was a race condition here where a page can get destroyed
         // before testPage.evaluate executes but after browser.pages got called
