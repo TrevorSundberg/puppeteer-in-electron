@@ -139,9 +139,9 @@ export const getPage = async (
 
   const guid = v4();
   await window.webContents.executeJavaScript(`window.puppeteer = "${guid}"`);
-  const pages = await browser.pages();
+  const pages = await browser.pages(); /* 
   const guids = await Promise.all(
-    pages.map((testPage) => {
+    pages.map(async (testPage) => {
       try {
         // there was a race condition here where a page can get destroyed
         // before testPage.evaluate executes but after browser.pages got called
@@ -150,6 +150,9 @@ export const getPage = async (
         return undefined;
       }
     })
+  ); */
+  const guids = await Promise.all(
+    pages.map((testPage) => testPage.evaluate("window.puppeteer"))
   );
   const index = guids.findIndex((testGuid) => testGuid === guid);
   await window.webContents.executeJavaScript("delete window.puppeteer");
