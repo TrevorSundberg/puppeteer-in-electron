@@ -138,7 +138,13 @@ export const getPage = async (
   const guid = v4();
   await window.webContents.executeJavaScript(`window.puppeteer = "${guid}"`);
   const pages = await browser.pages();
-  const guids = await Promise.all(pages.map((testPage) => testPage.evaluate("window.puppeteer")));
+  const guids = await Promise.all(pages.map(async (testPage) => {
+    try {
+      return await testPage.evaluate("window.puppeteer")
+    } catch {
+      return undefined;
+    }
+  }));
   const index = guids.findIndex((testGuid) => testGuid === guid);
   await window.webContents.executeJavaScript("delete window.puppeteer");
   const page = pages[index];
