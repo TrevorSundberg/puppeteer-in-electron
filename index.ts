@@ -93,7 +93,7 @@ export const connect = async (app: App, puppeteer: puppeteer): Promise<Browser> 
     throw new Error("The electron application was not setup to listen on a port. Was `initialize` called at startup?");
   }
 
-  await app.whenReady;
+  await app.whenReady();
   const json = await retry(() => readJson(port));
 
   const browser = await puppeteer.connect({
